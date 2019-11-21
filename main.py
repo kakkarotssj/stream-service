@@ -23,12 +23,12 @@ def main():
 			[stream-name] [topic-name] [new-retention-time]
 	"""
 
-	args = sys.argv[2:]
+	args = sys.argv[1:]
 	if not args:
 		# TO-DO: instantiate or get singleton object of server
 		print('starting server...')
 	else:
-		ValidateArgumentLength.validate(args)
+		ValidateArgumentLength.validate(*args)
 
 		service, activity = args[:2]
 		extras = args[2:]

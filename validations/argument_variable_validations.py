@@ -43,7 +43,7 @@ class ValidateActivity(ValidatorBase):
         service = kwargs['service']
         activity = kwargs['activity']
 
-        if VALID_ACTIVITIES[service].get(activity):
+        if activity not in VALID_ACTIVITIES[service]:
             issue = ValidateActivity.error_code.name
             help = ValidateActivity.error_code.value
             data = {'data': VALID_ACTIVITIES}
@@ -60,6 +60,7 @@ class ValidateExtras(ValidatorBase):
         activity = kwargs['activity']
         extras = kwargs['extras']
 
+        # TO-DO: also add for valid extras, fetched from db later.
         if len(extras) != len(VALID_EXTRAS[service][activity]):
             issue = ValidateExtras.error_code.name
             help = ValidateExtras.error_code.value
