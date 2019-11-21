@@ -1,10 +1,9 @@
 import sys
 
-from constants import VALID_SERVICES, VALID_ACTIVITIES
-from errors.errors.argument_variable_errors import ArgumentVariableError
-from errors.exceptions.argument_variable_exceptions import InvalidArgumentLengthException
-from errors.exceptions.argument_variable_exceptions import InvalidServiceException
-from errors.exceptions.argument_variable_exceptions import InvalidActivityException
+from validations.argument_variable_validations import ValidateActivity
+from validations.argument_variable_validations import ValidateArgumentLength
+from validations.argument_variable_validations import ValidateExtras
+from validations.argument_variable_validations import ValidateService
 
 
 def main():
@@ -29,47 +28,17 @@ def main():
 		# TO-DO: instantiate or get singleton object of server
 		print('starting server...')
 	else:
-		if len(args) < 2:
-			issue = ArgumentVariableError.INVALID_ARGUMENTS_LENGTH.name
-			help = ArgumentVariableError.INVALID_ARGUMENTS_LENGTH.value
-			data = {'data': args}
+		ValidateArgumentLength.validate(args)
 
-			raise InvalidArgumentLengthException(issue, help, data)
-		else:
-			service, activity = args[:2]
-			extras = args[2:]
+		service, activity = args[:2]
+		extras = args[2:]
 
-			# TO-DO: open a new validationBase class and derived validationClasses, implement a common method to
-			# throw error and validation flow
-			validate_service(service, args)
-			validate_activity(activity, service, args)
-			validate_extras(activity, service, extras, args)
+		ValidateService.validate(service=service)
+		ValidateActivity.validate(service=service, activity=activity)
+		ValidateExtras.validate(service=service, activity=activity, extras=extras)
 
-			# TO-DO: global constants will define all activities from something like enum which will map to
-			# activities implementations
-
-
-def validate_service(service, args):
-	if service not in VALID_SERVICES:
-		issue = ArgumentVariableError.INVALID_SERVICE.name
-		help = ArgumentVariableError.INVALID_SERVICE.value
-		data = {'data': args}
-
-		raise InvalidServiceException(issue, help, data)
-
-
-def validate_activity(service, activity, args):
-	if VALID_ACTIVITIES[service].get(activity):
-		issue = ArgumentVariableError.INVALID_ACTIVITY.name
-		help = ArgumentVariableError.INVALID_ACTIVITY.value
-		data = {'data': args}
-
-		raise InvalidActivityException(issue, help, data)
-
-
-def validate_extras(service, activity, extras, args):
-	# TO-DO: implement validation according to length of args
-	pass
+		# TO-DO: global constants will define all activities from something like enum which will map to
+		# activities implementations
 
 
 if __name__ == '__main__':
