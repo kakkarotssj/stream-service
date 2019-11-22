@@ -1,10 +1,10 @@
 from .base import ValidatorBase
 from constants import VALID_SERVICES, VALID_ACTIVITIES, VALID_EXTRAS
-from errors.errors.argument_variable_errors import ArgumentVariableError
-from errors.exceptions.argument_variable_exceptions import InvalidActivityException
-from errors.exceptions.argument_variable_exceptions import InvalidExtrasException
-from errors.exceptions.argument_variable_exceptions import InvalidArgumentLengthException
-from errors.exceptions.argument_variable_exceptions import InvalidServiceException
+from errors.errors import ArgumentVariableError
+from errors.exceptions import InvalidActivityException
+from errors.exceptions import InvalidArgumentLengthException
+from errors.exceptions import InvalidExtrasException
+from errors.exceptions import InvalidServiceException
 
 
 class ValidateArgumentLength(ValidatorBase):
