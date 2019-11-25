@@ -1,5 +1,6 @@
 import sys
 
+from server.server import Server
 from validations.argument_variable_validations import ValidateActivity
 from validations.argument_variable_validations import ValidateArgumentLength
 from validations.argument_variable_validations import ValidateExtras
@@ -25,8 +26,15 @@ def main():
 
 	args = sys.argv[1:]
 	if not args:
-		# TO-DO: instantiate or get singleton object of server
-		print('starting server...')
+		server = Server()
+		server.add_stream('stream-1')
+		server.add_stream('stream-2')
+		server.add_stream('stream-1')
+		server.delete_stream('stream-3')
+		streams = server.retrieve_streams()
+
+		for stream in streams:
+			print(stream)
 	else:
 		ValidateArgumentLength.validate(*args)
 
