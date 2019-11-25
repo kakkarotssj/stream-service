@@ -8,35 +8,33 @@ from errors.exceptions import InvalidServiceException
 
 
 class ValidateArgumentLength(ValidatorBase):
+    error = ArgumentVariableError
     error_code = ArgumentVariableError.INVALID_ARGUMENTS_LENGTH
+    exception = InvalidArgumentLengthException
 
     @classmethod
     def validate(cls, *args, **kwargs):
         if len(args) < 2:
-            issue = ValidateArgumentLength.error_code.name
-            help = ValidateArgumentLength.error_code.value
-            data = {'data': args}
-
-            raise InvalidArgumentLengthException(issue, help, data)
+            cls.raise_exception(ValidateArgumentLength, {'data': args})
 
 
 class ValidateService(ValidatorBase):
+    error = ArgumentVariableError
     error_code = ArgumentVariableError.INVALID_SERVICE
+    exception = InvalidServiceException
 
     @classmethod
     def validate(cls, *args, **kwargs):
         service = kwargs['service']
 
         if service not in VALID_SERVICES:
-            issue = ValidateService.error_code.name
-            help = ValidateService.error_code.value
-            data = {'data': VALID_SERVICES}
-
-            raise InvalidServiceException(issue, help, data)
+            cls.raise_exception(ValidateService, {'data': VALID_SERVICES})
 
 
 class ValidateActivity(ValidatorBase):
+    error = ArgumentVariableError
     error_code = ArgumentVariableError.INVALID_ACTIVITY
+    exception = InvalidActivityException
 
     @classmethod
     def validate(cls, *args, **kwargs):
@@ -44,15 +42,13 @@ class ValidateActivity(ValidatorBase):
         activity = kwargs['activity']
 
         if activity not in VALID_ACTIVITIES[service]:
-            issue = ValidateActivity.error_code.name
-            help = ValidateActivity.error_code.value
-            data = {'data': VALID_ACTIVITIES}
-
-            raise InvalidActivityException(issue, help, data)
+            cls.raise_exception(ValidateActivity, {'data': VALID_ACTIVITIES})
 
 
 class ValidateExtras(ValidatorBase):
+    error = ArgumentVariableError
     error_code = ArgumentVariableError.INVALID_EXTRAS
+    exception = InvalidExtrasException
 
     @classmethod
     def validate(cls, *args, **kwargs):
@@ -62,8 +58,4 @@ class ValidateExtras(ValidatorBase):
 
         # TO-DO: also add for valid extras, fetched from db later.
         if len(extras) != len(VALID_EXTRAS[service][activity]):
-            issue = ValidateExtras.error_code.name
-            help = ValidateExtras.error_code.value
-            data = {'data': VALID_EXTRAS}
-
-            raise InvalidExtrasException(issue, help, data)
+            cls.raise_exception(ValidateExtras, {'data': VALID_EXTRAS})

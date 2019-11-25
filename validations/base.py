@@ -2,12 +2,18 @@ from abc import ABC, abstractmethod
 
 
 class ValidatorBase(ABC):
+    exception = None
+    error = None
     error_code = None
-
-    def get_error_code(self):
-        return self.error_code  # returns error_code
 
     @classmethod
     @abstractmethod
     def validate(cls, *args, **kwargs):
         pass
+
+    def raise_exception(cls, data):
+        cls.error.raise_exception(
+            cls.error_code,
+            data,
+            cls.exception
+        )

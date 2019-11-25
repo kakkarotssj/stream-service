@@ -10,3 +10,11 @@ class ErrorBase(Enum):
 		** Data: relevant data upon which following error occurred.
 	* All the derived classes will be enumeration based, having Issue as enum-name and Help as enum-value
 	"""
+
+	@classmethod
+	def raise_exception(cls, error, data, exception):
+		issue = error.name
+		help = error.value
+		data = data['data']
+
+		raise exception(issue, help, data)
