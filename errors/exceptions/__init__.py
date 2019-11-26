@@ -2,5 +2,7 @@ from .argument_variable_exceptions import InvalidActivityException
 from .argument_variable_exceptions import InvalidArgumentLengthException
 from .argument_variable_exceptions import InvalidExtrasException
 from .argument_variable_exceptions import InvalidServiceException
-from .stream_manager_exceptions import StreamAlreadyExistsException
-from .stream_manager_exceptions import StreamDoesNotExistsException
+from .server_manager_exceptions import StreamAlreadyExistsException
+from .server_manager_exceptions import StreamDoesNotExistsException
+from .server_manager_exceptions import TopicAlreadyExistsException
+from .server_manager_exceptions import TopicDoesNotExistsException

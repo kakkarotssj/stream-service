@@ -12,9 +12,9 @@ class ErrorBase(Enum):
 	"""
 
 	@classmethod
-	def raise_exception(cls, error, data, exception):
-		issue = error.name
-		help = error.value
+	def raise_exception(cls, error_code, data, exception):
+		issue = error_code.name
+		help = error_code.value
 		data = data['data']
 
 		raise exception(issue, help, data)

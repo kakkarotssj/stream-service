@@ -29,12 +29,22 @@ def main():
 		server = Server()
 		server.add_stream('stream-1')
 		server.add_stream('stream-2')
-		server.add_stream('stream-1')
-		server.delete_stream('stream-3')
 		streams = server.retrieve_streams()
 
+		print('****TESTING STREAM FUNCTIONALITIES****')
 		for stream in streams:
 			print(stream)
+
+		server.add_topic(stream='stream-1', topic='topic-1')
+		server.add_topic(stream='stream-1', topic='topic-2')
+		server.add_topic(stream='stream-2', topic='topic-3')
+		server.add_topic(stream='stream-1', topic='topic-4')
+		server.add_topic(stream='stream-1', topic='topic-5')
+
+		topics = server.retrieve_topics_on_stream(stream='stream-1')
+		print('\n\n****TESTING TOPIC FUNCTIONALITIES****')
+		for topic in topics:
+			print(topic)
 	else:
 		ValidateArgumentLength.validate(*args)
 
